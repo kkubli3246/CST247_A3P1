@@ -1,0 +1,30 @@
+﻿@model Tuple<List<Activity3.Models.CustomerModel>, Activity3.Models.CustomerModel>
+
+
+@{
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+
+@Html.Label("Please Select a Customer")
+<br />
+
+
+@*@using (Html.BeginForm("OnSelectCustomer", "Customer", FormMethod.Post, new { id = "myform" }))*@
+@using (Ajax.BeginForm("OnSelectCustomer", "Customer", new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "customerInfo", InsertionMode = InsertionMode.Replace }, new { id = "myform" }))
+{
+    foreach (var c in Model.Item1)
+    {
+        <input type="radio" name=cus value=@c.ID onchange="document.getElementById('myform').submit()" />
+        @c.ID
+        <br />
+    }
+    
+<div id="customerInfo">
+    @Html.Partial("_CustomerDetails", Model.Item2)
+</div>
+
+}
+
+
+
